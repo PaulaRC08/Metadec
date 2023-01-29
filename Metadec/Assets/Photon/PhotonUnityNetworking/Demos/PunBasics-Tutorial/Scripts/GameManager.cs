@@ -31,14 +31,17 @@ namespace Photon.Pun.Demo.PunBasics
 		static public GameManager Instance;
 
 		#endregion
-
+		public GameObject playerAvater;
+		public GameObject mainCamera;
+		public GameObject playerFollow;
 		#region Private Fields
 
 		private GameObject instance;
 
-        [Tooltip("The prefab to use for representing the player")]
-        [SerializeField]
-        private GameObject playerPrefab;
+		[Tooltip("The prefab to use for representing the player")]
+		[SerializeField]
+		private GameObject playerPrefab;
+		
 
         #endregion
 
@@ -68,10 +71,16 @@ namespace Photon.Pun.Demo.PunBasics
 				if (PlayerManager.LocalPlayerInstance==null)
 				{
 				    Debug.LogFormat("We are Instantiating LocalPlayer from {0}", SceneManagerHelper.ActiveSceneName);
-
 					// we're in a room. spawn a character for the local player. it gets synced by using PhotonNetwork.Instantiate
-					PhotonNetwork.Instantiate(this.playerPrefab.name, new Vector3(0f,5f,0f), Quaternion.identity, 0);
-				}else{
+					Instantiate(mainCamera, Vector2.zero, Quaternion.identity);
+					Instantiate(playerFollow, Vector2.zero, Quaternion.identity);
+					//object[] PlayerData = new object[1];
+					//PlayerData[0] = "https://api.readyplayer.me/v1/avatars/63d329e72b5cfca19e1f5176.glb";
+					//PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "YoyoUlt"), yoyoOrig.transform.position, Quaternion.identity, 0, yoyoOwnerPlayerData);
+					PhotonNetwork.Instantiate(this.playerPrefab.name, new Vector3(0f,5f,0f), Quaternion.identity, 0/*, PlayerData*/);
+
+				}
+				else{
 
 					Debug.LogFormat("Ignoring scene load for {0}", SceneManagerHelper.ActiveSceneName);
 				}
@@ -109,7 +118,6 @@ namespace Photon.Pun.Demo.PunBasics
 			{
 				Debug.LogFormat( "OnPlayerEnteredRoom IsMasterClient {0}", PhotonNetwork.IsMasterClient ); // called before OnPlayerLeftRoom
 
-				LoadArena();
 			}
 		}
 
@@ -125,7 +133,6 @@ namespace Photon.Pun.Demo.PunBasics
 			{
 				Debug.LogFormat( "OnPlayerEnteredRoom IsMasterClient {0}", PhotonNetwork.IsMasterClient ); // called before OnPlayerLeftRoom
 
-				LoadArena(); 
 			}
 		}
 
@@ -155,17 +162,6 @@ namespace Photon.Pun.Demo.PunBasics
 
 		#region Private Methods
 
-		void LoadArena()
-		{
-			if ( ! PhotonNetwork.IsMasterClient )
-			{
-				Debug.LogError( "PhotonNetwork : Trying to Load a level but we are not the master Client" );
-			}
-
-			Debug.LogFormat( "PhotonNetwork : Loading Level : {0}", PhotonNetwork.CurrentRoom.PlayerCount );
-
-			PhotonNetwork.LoadLevel("PunBasics-Room for "+PhotonNetwork.CurrentRoom.PlayerCount);
-		}
 
 		#endregion
 

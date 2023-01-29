@@ -8,4 +8,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/LoginRoom.unity
     guid: 5591465636351264b9eb8de6cbd9daf5
+  - enabled: 1
+    path: Assets/Scenes/UdeC.unity
+    guid: 9fc0d4010bbf28b4594072e72b8655ab
   m_configObjects: {}

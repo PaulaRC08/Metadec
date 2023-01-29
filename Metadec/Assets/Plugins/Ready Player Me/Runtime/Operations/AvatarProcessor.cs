@@ -83,6 +83,8 @@ namespace ReadyPlayerMe
         private const string MASCULINE_ANIMATION_AVATAR_NAME = "AnimationAvatars/MasculineAnimationAvatar";
         private const string FEMININE_ANIMATION_AVATAR_NAME = "AnimationAvatars/FeminineAnimationAvatar";
 
+        private const string ANIMATOR_CONTROLLER_NAME = "Avatar Animator";
+
         // Bone names
         private const string BONE_HIPS = "Hips";
         private const string BONE_ARMATURE = "Armature";
@@ -108,9 +110,26 @@ namespace ReadyPlayerMe
                 ? MASCULINE_ANIMATION_AVATAR_NAME
                 : FEMININE_ANIMATION_AVATAR_NAME;
             var animationAvatar = Resources.Load<Avatar>(animationAvatarSource);
-            var animator = avatar.AddComponent<Animator>();
-            animator.avatar = animationAvatar;
-            animator.applyRootMotion = true;
+            var animatorController = Resources.Load<RuntimeAnimatorController>(ANIMATOR_CONTROLLER_NAME);
+
+            var usingTPC = GameObject.Find("https://api.readyplayer.me/v1/avatars/" + $"{avatar.name}" + ".glb").transform.parent; //Find Player with assigned avatarUrl only to parenting avatar, if you have more than 1 Player in the scene.
+            // var usingTPC = GameObject.FindGameObjectWithTag("Player"); //Find Player with Tag to parent avatar
+            if (usingTPC)  //Set Custom Process if using TPC
+            {
+                avatar.transform.parent = usingTPC.transform; //Set parent for avatar
+                avatar.transform.SetPositionAndRotation(usingTPC.transform.position, usingTPC.transform.rotation); //Set pos and rot avatar to align in runtime
+                Animator animator = avatar.GetComponentInParent<Animator>(); //Get PlayerArmature Animator
+                animator.avatar = animationAvatar; //Assign Animator Avatar
+                // animator.applyRootMotion = false; //Set Animator Root Motion to false, it's false by default
+            }
+            else  //Back to original Ready Player Me Process if not using TPC
+            {
+                Animator animator = avatar.AddComponent<Animator>();
+                animator.runtimeAnimatorController = animatorController;
+                animator.avatar = animationAvatar;
+                animator.applyRootMotion = true;
+            }
+            //End
         }
 
         #endregion
