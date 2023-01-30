@@ -19,6 +19,7 @@ namespace ReadyPlayerMe
         [Tooltip("Avatar Renderer Settings")]
         public bool usingAvatarUI;
         [SerializeField] private AvatarRenderScene scene = AvatarRenderScene.FullBodyPostureTransparent;
+        [SerializeField] private GameObject AvatarUICanvas;
         [SerializeField] private SpriteRenderer spriteRenderer;
         [SerializeField] private GameObject loadingPanel;
         [SerializeField] private Image avatarUIPanel;
@@ -33,9 +34,14 @@ namespace ReadyPlayerMe
 
         private const string TAG = nameof(AvatarRenderExample);
         #endregion
+        private void Start()
+        {
+            AvatarUICanvas.SetActive(false);
+        }
 
         public void cargarRender(string avatarUrls)
         {
+            AvatarUICanvas.SetActive(true);
             StartLoadAvatarRenderer(avatarUrls);
         }
         #region Avatar Renderer

@@ -45,6 +45,7 @@ public class EnEscenario : MonoBehaviourPunCallbacks
         {
             control = GameObject.Find("ControladorEscenario");
         }
+
         if (photonView.IsMine)
         {
             idavatar = avatarUrl.Replace("https://api.readyplayer.me/v1/avatars/", "");
@@ -54,6 +55,10 @@ public class EnEscenario : MonoBehaviourPunCallbacks
                 RpmRuntime.cargarRender(avatarUrl);
                 avatarCargado = true;
             }
+        }
+        else
+        {
+            carga.SetActive(false);
         }
     }
 }

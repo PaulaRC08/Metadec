@@ -1,4 +1,5 @@
 using System.Collections;
+using Assets.SimpleLocalization;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
@@ -8,6 +9,10 @@ using UnityEngine.UI;
 public class LobbyControl : MonoBehaviourPunCallbacks
 {
     public GameObject prefabPlayer;
+    public GameObject Lenguaje;
+        public Dropdown opcionLenguaje;
+        public int LenguajePlayer = 0;
+        public string LenguajestPlayer;
     public GameObject iniciodeSesion;
     public GameObject ingresoSalaEstudiante;
         public string nombreSala;
@@ -47,6 +52,16 @@ public class LobbyControl : MonoBehaviourPunCallbacks
 
     void Start()
     {
+        PlayerPrefs.DeleteAll();
+        Debug.Log(PlayerPrefs.GetString("Languaje"));
+        if (PlayerPrefs.GetString("Languaje") == ""){
+            Lenguaje.SetActive(true);
+        } else { 
+            Lenguaje.SetActive(false);
+            LocalizationManager.Read();
+            LenguajestPlayer = PlayerPrefs.GetString("Languaje");
+            LocalizationManager.Language = PlayerPrefs.GetString("Languaje");
+        }
         iniciodeSesion.SetActive(true);
         ingresoSalaEstudiante.SetActive(false);
         ingresoSalaDocente.SetActive(false);
@@ -65,7 +80,26 @@ public class LobbyControl : MonoBehaviourPunCallbacks
         }
     }
 
-    
+    public void changeLanguage()
+    {
+        if (opcionLenguaje.value!=0)
+        {
+            PlayerPrefs.SetString("Languaje", opcionLenguaje.captionText.text);
+            Lenguaje.SetActive(false);
+            LocalizationManager.Read();
+            LocalizationManager.Language = PlayerPrefs.GetString("Languaje");
+            LenguajestPlayer = opcionLenguaje.captionText.text;
+            if (opcionLenguaje.value != 1)
+            {
+                LenguajePlayer = 0;
+            }
+            else
+            {
+                LenguajePlayer = 1;
+            }
+        }
+    }
+
     public override void OnCreateRoomFailed(short returnCode, string message)
     {
         Carga.SetActive(false);
@@ -75,41 +109,86 @@ public class LobbyControl : MonoBehaviourPunCallbacks
 
     public void joinRoom()
     {
-        if (nombreSala != "" && contraseñaSala != "")
+        if (LenguajestPlayer=="Español")
         {
-            if (contraseñaSala == "123")
+            if (nombreSala != "" && contraseñaSala != "")
             {
-                PhotonNetwork.JoinRoom(nombreSala);
-                Debug.Log("Ingreso a la Sala Correctamente");
-                Carga.SetActive(true);
+                if (contraseñaSala == "123")
+                {
+                    PhotonNetwork.JoinRoom(nombreSala);
+                    Debug.Log("Ingreso a la Sala Correctamente");
+                    Carga.SetActive(true);
+                }
+                else
+                {
+                    errorEmergente.SetActive(true);
+                    txErrorEmergente.text = "Contraseña Incorrecta";
+                }
             }
-            else{
+            else
+            {
                 errorEmergente.SetActive(true);
-                txErrorEmergente.text = "Contraseña Incorrecta";
+                txErrorEmergente.text = "Escribe el codigo de la sala para ingresar";
             }
         }
-        else{
-            errorEmergente.SetActive(true);
-            txErrorEmergente.text = "Escribe el codigo de la sala para ingresar";
+        else
+        {
+            if (nombreSala != "" && contraseñaSala != "")
+            {
+                if (contraseñaSala == "123")
+                {
+                    PhotonNetwork.JoinRoom(nombreSala);
+                    Debug.Log("Ingreso a la Sala Correctamente");
+                    Carga.SetActive(true);
+                }
+                else
+                {
+                    errorEmergente.SetActive(true);
+                    txErrorEmergente.text = "Incorrect password";
+                }
+            }
+            else
+            {
+                errorEmergente.SetActive(true);
+                txErrorEmergente.text = "Empty code or password fields";
+            }
         }
-
     }
 
     public override void OnJoinRoomFailed(short returnCode, string message)
     {
         Carga.SetActive(false);
         errorEmergente.SetActive(true);
-        if (message == "Game does not exist")
+        if (LenguajestPlayer == "Español")
         {
-            txErrorEmergente.text = "La sala no existe o no ha sido abierta";
-        }
-        else if (message == "Game closed")
-        {
-            txErrorEmergente.text = "La Sala ya fue iniciada";
+            if (message == "Game does not exist")
+            {
+                txErrorEmergente.text = "La sala no existe o no ha sido abierta";
+            }
+            else if (message == "Game closed")
+            {
+                txErrorEmergente.text = "La Sala ya fue iniciada";
+            }
+            else
+            {
+                txErrorEmergente.text = message;
+            }
         }
         else
         {
-            txErrorEmergente.text = message;
+
+            if (message == "Game does not exist")
+            {
+                txErrorEmergente.text = "The room does not exist or has not been opened";
+            }
+            else if (message == "Game closed")
+            {
+                txErrorEmergente.text = "The room has already started";
+            }
+            else
+            {
+                txErrorEmergente.text = message;
+            }
         }
     }
 
@@ -150,32 +229,61 @@ public class LobbyControl : MonoBehaviourPunCallbacks
         base.OnMasterClientSwitched(newMasterClient);
         exitRoom();
         errorEmergente.SetActive(true);
-        txErrorEmergente.text = "El Docente encargado a salido de la sala";
+        if (LenguajestPlayer == "Español")
+        {
+            txErrorEmergente.text = "El Docente encargado a salido de la sala";
+        }
+        else
+        {
+            txErrorEmergente.text = "The teacher in charge left the room";
+        }
     }
 
     void listaJugadores()
     {
+        string[] paisPlayer;
         TxNumeroJugadores.text = PhotonNetwork.PlayerList.Length + "/20";
         foreach (Player player in PhotonNetwork.PlayerList)
         {
+            paisPlayer = player.CustomProperties["pais"].ToString().Split(',');
             if (player.CustomProperties["rol"].ToString() == "Docente")
             {
                 if (NombreDocente1.text == "NOMBRE Y APELLIDO")
                 {
                     Docente1.SetActive(true);
                     NombreDocente1.text = player.NickName;
-                    PaisDocente1.text = player.CustomProperties["pais"].ToString();
+                    if (LenguajestPlayer == "Español"){
+                        PaisDocente1.text = paisPlayer[0];
+                    }else{
+                        PaisDocente1.text = paisPlayer[1];}
+
+                    
                 }
                 else{
                     Docente2.SetActive(true);
                     NombreDocente2.text = player.NickName;
-                    PaisDocente2.text = player.CustomProperties["pais"].ToString();
+                    if (LenguajestPlayer == "Español")
+                    {
+                        PaisDocente2.text = paisPlayer[0];
+                    }
+                    else
+                    {
+                        PaisDocente2.text = paisPlayer[1];
+                    }
                 }
             }
             else{
                 Debug.Log("Estudiante");
                 GameObject panelEstudiante = Instantiate(prefabEstudiante, ScrollViewcontentListPlayers);
-                panelEstudiante.GetComponent<ContentEstudianteFicha>().cambiarPrefab(player.NickName, player.CustomProperties["pais"].ToString());
+                if (LenguajestPlayer == "Español")
+                {
+                    panelEstudiante.GetComponent<ContentEstudianteFicha>().cambiarPrefab(player.NickName, paisPlayer[0]);
+                }
+                else
+                {
+                    panelEstudiante.GetComponent<ContentEstudianteFicha>().cambiarPrefab(player.NickName, paisPlayer[1]);
+                }
+                
             }
             
         }

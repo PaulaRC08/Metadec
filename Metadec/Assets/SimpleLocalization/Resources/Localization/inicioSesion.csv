@@ -1,0 +1,10 @@
+Key,English,Español
+InicioSesion.TituloInicio,LOGIN,"INICIO 
+DE SESION"
+InicioSesion.usuario,User:,Usuario:
+InicioSesion.contra,Password:,Contraseña:
+InicioSesion.LabelUsuario,Enter your username,Digite su Usuario
+InicioSesion.LabelContra,Enter your password,Digite su contraseña
+InicioSesion.botonIngreso,LOGIN,INGRESAR
+InicioSesion.botonRegistro,SIGN UP,REGISTRATE
+InicioSesion.url,at www.metadecUdeC.com,en www.metadecUdeC.com

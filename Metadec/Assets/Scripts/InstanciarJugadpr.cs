@@ -65,24 +65,22 @@ public class InstanciarJugadpr : MonoBehaviourPunCallbacks
         base.OnDisconnected(cause);
         SceneManager.LoadScene("LoginRoom");
     }
+    public override void OnMasterClientSwitched(Player newMasterClient)
+    {
+        SceneManager.LoadScene("LoginRoom");
+    }
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
         base.OnPlayerLeftRoom(otherPlayer);
-        if (otherPlayer.IsMasterClient)
+
+        foreach (string name in namesPlayersInstantiate)
         {
-            SceneManager.LoadScene("LoginRoom");
-        }
-        else
-        {
-            foreach (string name in namesPlayersInstantiate)
+            if (name == otherPlayer.NickName)
             {
-                if (name == otherPlayer.NickName)
-                {
-                    nJugadoresEnEscena -= 1;
-                    namesPlayersInstantiate.Remove(name);
-                    break;
-                }
+                nJugadoresEnEscena -= 1;
+                namesPlayersInstantiate.Remove(name);
+                break;
             }
         }
     }

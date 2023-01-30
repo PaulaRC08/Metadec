@@ -264,6 +264,7 @@ GameObject:
   - component: {fileID: 8255629838749155043}
   - component: {fileID: 8255629838749155041}
   - component: {fileID: 8255629838749155040}
+  - component: {fileID: 7705116229857145897}
   m_Layer: 5
   m_Name: CodigoSala
   m_TagString: Untagged
@@ -332,6 +333,19 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 'Codigo Sesion:'
+--- !u!114 &7705116229857145897
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8255629838749155042}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2404a37f3bd75444aa4ad05d0f228347, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LocalizationKey: SalaDocente.codigoSesion
 --- !u!1 &8255629839456545051
 GameObject:
   m_ObjectHideFlags: 0
@@ -343,6 +357,7 @@ GameObject:
   - component: {fileID: 8255629839456545048}
   - component: {fileID: 8255629839456545054}
   - component: {fileID: 8255629839456545049}
+  - component: {fileID: 1641233653632511863}
   m_Layer: 5
   m_Name: Fecha
   m_TagString: Untagged
@@ -411,6 +426,19 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 'Fecha:'
+--- !u!114 &1641233653632511863
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8255629839456545051}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2404a37f3bd75444aa4ad05d0f228347, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LocalizationKey: SalaDocente.fecha
 --- !u!1 &8255629840243382127
 GameObject:
   m_ObjectHideFlags: 0
@@ -422,6 +450,7 @@ GameObject:
   - component: {fileID: 8255629840243382124}
   - component: {fileID: 8255629840243382114}
   - component: {fileID: 8255629840243382125}
+  - component: {fileID: 5727295663517124451}
   m_Layer: 5
   m_Name: "SalaContrase\xF1a"
   m_TagString: Untagged
@@ -490,3 +519,16 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "Contrase\xF1a:"
+--- !u!114 &5727295663517124451
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8255629840243382127}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2404a37f3bd75444aa4ad05d0f228347, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LocalizationKey: "SalaDocente.contrase\xF1a"

@@ -41,10 +41,10 @@ public class ContentSalaProgramada : MonoBehaviourPunCallbacks
         contraseñaP = contraseña;
         materiaP = materia;
         fechaP = fecha;
-        TextCodigo.text = "Codigo sesion: " + codigo;
-        TextContraseña.text = "Contraseña: " + contraseña;
-        TextMateria.text = "Clase: " + materia;
-        TextFecha.text = "Fecha: " + fecha;
+        TextCodigo.text += codigo;
+        TextContraseña.text += contraseña;
+        TextMateria.text += materia;
+        TextFecha.text += fecha;
         hashRoom.Clear();
         hashRoom.Add("Clase", materia);
     }
@@ -53,7 +53,8 @@ public class ContentSalaProgramada : MonoBehaviourPunCallbacks
     {
         RoomOptions roomOptions = new RoomOptions(){MaxPlayers = 20,};
         roomOptions.CustomRoomProperties = hashRoom;
-        PhotonNetwork.CreateRoom(codigoP, roomOptions);
+        //PhotonNetwork.CreateRoom(codigoP, roomOptions);
+        PhotonNetwork.CreateRoom("123", roomOptions);
         PantallaCarga.GetComponent<DocIngresoSala>().carga.SetActive(true);
         Debug.Log("La sala " + "123" + " a sido creada");
         ;
