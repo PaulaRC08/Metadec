@@ -28,15 +28,14 @@ public class LobbyControl : MonoBehaviourPunCallbacks
         public GameObject Docente1;
             public Text NombreDocente1;
             public Text PaisDocente1;
-        public GameObject Docente2;
-            public Text NombreDocente2;
-            public Text PaisDocente2;
+            public Text RolDocente1;
         public GameObject prefabEstudiante;
         public Transform ScrollViewcontentListPlayers;
     public Button BtnInicio;
     public GameObject Carga;
     public GameObject errorEmergente;
         public Text txErrorEmergente;
+    Hashtable hashRoomLobby = new Hashtable();
 
     bool isload = false;
 
@@ -52,6 +51,8 @@ public class LobbyControl : MonoBehaviourPunCallbacks
 
     void Start()
     {
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
         PlayerPrefs.DeleteAll();
         Debug.Log(PlayerPrefs.GetString("Languaje"));
         if (PlayerPrefs.GetString("Languaje") == ""){
@@ -68,9 +69,15 @@ public class LobbyControl : MonoBehaviourPunCallbacks
         sala.SetActive(false);
             BtnInicio.gameObject.SetActive(false);
             Docente1.SetActive(false);
-            Docente2.SetActive(false);
-        Carga.SetActive(true);
         errorEmergente.SetActive(false);
+        if (PhotonNetwork.IsConnected)
+        {
+            Carga.SetActive(false);
+        }
+        else
+        {
+            Carga.SetActive(true);
+        }
     }
     void Update()
     {
@@ -116,6 +123,7 @@ public class LobbyControl : MonoBehaviourPunCallbacks
                 if (contraseñaSala == "123")
                 {
                     PhotonNetwork.JoinRoom(nombreSala);
+                    
                     Debug.Log("Ingreso a la Sala Correctamente");
                     Carga.SetActive(true);
                 }
@@ -242,7 +250,62 @@ public class LobbyControl : MonoBehaviourPunCallbacks
     void listaJugadores()
     {
         string[] paisPlayer;
+        string[] rolPlayer;
         TxNumeroJugadores.text = PhotonNetwork.PlayerList.Length + "/20";
+        foreach (Player player in PhotonNetwork.PlayerList)
+        {
+            if (player.CustomProperties["rol"].ToString() == "Docente")
+            {
+                if (player.IsMasterClient)
+                {
+                    paisPlayer = player.CustomProperties["pais"].ToString().Split(',');
+                    Docente1.SetActive(true);
+                    NombreDocente1.text = player.NickName;
+                    if (LenguajestPlayer == "Español")
+                    {
+                        PaisDocente1.text = paisPlayer[0];
+                        RolDocente1.text = "Docente";
+                    }
+                    else
+                    {
+                        PaisDocente1.text = paisPlayer[1];
+                        RolDocente1.text = "Teacher";
+                    }
+                }
+                else
+                {
+                    rolPlayer = new string[] { "Docente", "Teacher" };
+                    GameObject panelEstudiante = Instantiate(prefabEstudiante, ScrollViewcontentListPlayers);
+                    if (LenguajestPlayer == "Español")
+                    {
+                        panelEstudiante.GetComponent<ContentEstudianteFicha>().cambiarPrefab(player.NickName, player.CustomProperties["pais"].ToString(), rolPlayer[0]);
+                    }
+                    else
+                    {
+                        panelEstudiante.GetComponent<ContentEstudianteFicha>().cambiarPrefab(player.NickName, player.CustomProperties["pais"].ToString(), rolPlayer[1]);
+                    } 
+                }
+            }
+
+        }
+        foreach (Player player in PhotonNetwork.PlayerList)
+        {
+            if (player.CustomProperties["rol"].ToString() == "Estudiante")
+            {
+                rolPlayer = new string[] { "Estudiante", "Student" };
+                GameObject panelEstudiante = Instantiate(prefabEstudiante, ScrollViewcontentListPlayers);
+                if (LenguajestPlayer == "Español")
+                {
+                    panelEstudiante.GetComponent<ContentEstudianteFicha>().cambiarPrefab(player.NickName, player.CustomProperties["pais"].ToString(), rolPlayer[0]);
+                }
+                else
+                {
+                    panelEstudiante.GetComponent<ContentEstudianteFicha>().cambiarPrefab(player.NickName, player.CustomProperties["pais"].ToString(), rolPlayer[1]);
+                }
+                    
+            }
+        }
+        /*
         foreach (Player player in PhotonNetwork.PlayerList)
         {
             paisPlayer = player.CustomProperties["pais"].ToString().Split(',');
@@ -257,7 +320,7 @@ public class LobbyControl : MonoBehaviourPunCallbacks
                     }else{
                         PaisDocente1.text = paisPlayer[1];}
 
-                    
+
                 }
                 else{
                     Docente2.SetActive(true);
@@ -275,25 +338,16 @@ public class LobbyControl : MonoBehaviourPunCallbacks
             else{
                 Debug.Log("Estudiante");
                 GameObject panelEstudiante = Instantiate(prefabEstudiante, ScrollViewcontentListPlayers);
-                if (LenguajestPlayer == "Español")
-                {
-                    panelEstudiante.GetComponent<ContentEstudianteFicha>().cambiarPrefab(player.NickName, paisPlayer[0]);
-                }
-                else
-                {
-                    panelEstudiante.GetComponent<ContentEstudianteFicha>().cambiarPrefab(player.NickName, paisPlayer[1]);
-                }
-                
+                //panelEstudiante.GetComponent<ContentEstudianteFicha>().cambiarPrefab(player.NickName, player.CustomProperties["pais"].ToString());
             }
             
-        }
+        }*/
     }
 
     void eliminarListaJugadores()
     {
         NombreDocente1.text = "NOMBRE Y APELLIDO";
         Docente1.SetActive(false);
-        Docente2.SetActive(false);
         for (int i = ScrollViewcontentListPlayers.childCount - 1; i >= 0; i--)
         {
             Destroy(ScrollViewcontentListPlayers.GetChild(i).gameObject);

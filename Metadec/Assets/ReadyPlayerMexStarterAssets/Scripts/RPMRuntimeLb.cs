@@ -164,14 +164,6 @@ namespace ReadyPlayerMe
                     eyeAnimator.BlinkInterval = BlinkInterval;
                 }
 
-                if (usingVoiceHandler)
-                {
-                    VoiceHandler voiceHandler = avatar.AddComponent<VoiceHandler>();
-                    voiceHandler.AudioSource = AudioSource;
-                    voiceHandler.AudioClip = AudioClip;
-                    voiceHandler.AudioProvider = AudioProvider;
-                }
-
 
                 if (usingEvent)
                 {

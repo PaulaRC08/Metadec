@@ -20,6 +20,7 @@ public class ContentSalaProgramada : MonoBehaviourPunCallbacks
     public Button AbrirSala;
 
     Hashtable hashRoom = new Hashtable();
+    
 
     private void Start()
     {
@@ -47,12 +48,15 @@ public class ContentSalaProgramada : MonoBehaviourPunCallbacks
         TextFecha.text += fecha;
         hashRoom.Clear();
         hashRoom.Add("Clase", materia);
+        hashRoom.Add("docentesenSala", false);
     }
 
     public void CreateRoom()
     {
-        RoomOptions roomOptions = new RoomOptions(){MaxPlayers = 20,};
+        
+        RoomOptions roomOptions = new RoomOptions(){MaxPlayers = 20};
         roomOptions.CustomRoomProperties = hashRoom;
+        //roomOptions.CustomRoomPropertiesForLobby = new string[] {"docentesenSala"};
         //PhotonNetwork.CreateRoom(codigoP, roomOptions);
         PhotonNetwork.CreateRoom("123", roomOptions);
         PantallaCarga.GetComponent<DocIngresoSala>().carga.SetActive(true);

@@ -1,0 +1,24 @@
+Key,English,Español
+Reporte.tListaJugadores,PLAYERS LIST,LISTAJUGADORES
+Reporte.btVolver,RETURN,VOLVER
+Reporte.tReporte,USER REPORT,REPORTE USUARIO
+Reporte.descrReporte,Indicate the following reasons why the user is reported,Indique de las siguientes razones por las que es reportado el usuario
+Reporte.opc1tit,OFFENSIVE COMMUNICATION,COMUNICACION OFENSIVA
+Reporte.opc1des,"Offensive language, hate speech, sexual harassment","Lenguaje ofensivo, discurso de odio, acoso sexual"
+Reporte.opc2tit,OFFENSIVE NAME,NOMBRE OFENSIVO
+Reporte.opc2des,Inappropriate username,Nombre del usuario inapropiado
+Reporte.opc3tit,DISRESPECTFUL BEHAVIOR,COMPORTAMIENTO IRRESPETUOSO
+Reporte.opc3des,"Offensive gesture, taunting, disruptive/unwelcome audio, or spam","Gesto ofensivo, burlas, audio disruptivo/inoportuno o spam"
+Reporte.opc4tit,THREATS,AMENAZAS
+Reporte.opc4des,"Out of game damage, emotional abuse, doxing, bullying","Daño fuera del juego, abuso emocional, doxing, intimidación"
+Reporte.descripInput,"If you want, you can tell us more about what happened.","Si quieres, puedes contarnos mas de lo sucedido"
+Reporte.inputLabel,Limit 370 characters,Limite 370 caractares 
+Reporte.btnReportar,REPORT,REPORTAR
+Reporte.btnverReportes,VIEW REPORTS,VER REPORTES
+Reporte.tlistaReportes,REPORTS,REPORTES
+Reporte.tusuarioReportado,REPORTED USER,USUARIO REPORTADO:
+Reporte.btnverReporte,VIEW REPORT,VER REPORTE
+Reporte.tReportado,REPORTED:,REPORTADO:
+Reporte.tquienReporto,WHO REPORTED:,QUIEN REPORTO:
+Reporte.tpenalizacion,PENALTY,PENALIZACIÓN
+Reporte.btnpenalizar,PENALIZE,PENALIZAR

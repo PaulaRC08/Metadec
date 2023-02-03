@@ -1,6 +1,7 @@
-Key,English,German,Russian
-Menu.Title,Menu,Menü,Меню
-Menu.NewGame,New game,Neues Spiel,Новая игра
-Menu.Continue,Continue,Fortsetzen,Продолжить
-Menu.Settings,Settings,Einstellungen,Настройки
-Menu.Review,Write a review,Eine Rezension schreiben,Написать отзыв
+Key,English,Español
+Menu.Tmicrofono,MICROPHONE,MICROFONO
+Menu.Tvolumen,VOLUME,VOLUMEN
+Menu.Tbrillo,BRIGHTNESS,BRILLO
+Menu.Tcalidad,QUALITY,CALIDAD
+Menu.btReporte,REPORT,REPORTE
+Menu.cerrarSala,CLOSE ROOM,CERRAR SALA

@@ -50,23 +50,15 @@ public class InstanciarJugadpr : MonoBehaviourPunCallbacks
                     avatarUrls.Add(player.CustomProperties["avatar"].ToString());
                 }
                 cargarAvatars.GetComponent<ReadyPlayerMe.RuntimeExampleMultiple>().avatarUrls.AddRange(avatarUrls);
-                cargarAvatars.GetComponent<ReadyPlayerMe.RuntimeExampleMultiple>().cargarAvatarsEscena();
+                //cargarAvatars.GetComponent<ReadyPlayerMe.RuntimeExampleMultiple>().cargarAvatarsEscena();
                 cargandoJugadores = false;
             }
-        }
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            Cursor.visible = true;
         }
     }
 
     public override void OnDisconnected(DisconnectCause cause)
     {
         base.OnDisconnected(cause);
-        SceneManager.LoadScene("LoginRoom");
-    }
-    public override void OnMasterClientSwitched(Player newMasterClient)
-    {
         SceneManager.LoadScene("LoginRoom");
     }
 
@@ -85,4 +77,9 @@ public class InstanciarJugadpr : MonoBehaviourPunCallbacks
         }
     }
 
+    public override void OnLeftRoom()
+    {
+        base.OnLeftRoom();
+        SceneManager.LoadScene("LoginRoom");
+    }
 }
