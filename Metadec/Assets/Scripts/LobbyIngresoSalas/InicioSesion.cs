@@ -48,19 +48,19 @@ public class InicioSesion : MonoBehaviourPunCallbacks
             nombreJugador = "Paula";
             paisJugador = "EU - Estados Unidos,EU - United States";
             rolJugador = "Docente";
-            avaterCode = "https://api.readyplayer.me/v1/avatars/63d2ccd323fe23d34bf8069f.glb";
+            avaterCode = "https://models.readyplayer.me/63d2ccd323fe23d34bf8069f.glb";
         }else if (usuario.Equals("juan"))
         {
             nombreJugador = "Juan";
             paisJugador = "CO - Colombia,CO - Colombia";
             rolJugador = "Docente";
-            avaterCode = "https://api.readyplayer.me/v1/avatars/63d4a314bc1bcc3f933ba207.glb";
+            avaterCode = "https://models.readyplayer.me/63d4a314bc1bcc3f933ba207.glb";
         }else if (usuario.Equals("user"))
         {
             nombreJugador = "user";
             paisJugador = "GER - Alemania,GER - Germany";
             rolJugador = "Estudiante";
-            avaterCode = "https://api.readyplayer.me/v1/avatars/63d317802b5cfca19e1f4358.glb";
+            avaterCode = "https://models.readyplayer.me/63d317802b5cfca19e1f4358.glb";
         }
 
             if (!(string.IsNullOrEmpty(usuario)) && !(string.IsNullOrEmpty(contraseña)))

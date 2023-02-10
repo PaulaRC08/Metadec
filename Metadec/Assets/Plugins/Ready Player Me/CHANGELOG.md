@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.13.2] - 2022.12.20
+
+### Added
+- IsWebViewUpToDate method added for making sure the target device can handle 3D rendering.
+- WebView Example updated with IsWebViewUpToDate usage.
+- WebView android library is updated.
+
 ## [1.13.1] - 2022.11.09
 
 ### Fixed

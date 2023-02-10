@@ -2,6 +2,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using Photon.Voice;
 using Photon.Voice.Unity;
+using StarterAssets;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,8 +12,12 @@ using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 public class PlayerUIScene : MonoBehaviourPunCallbacks
 {
-    public string prueba;
     Hashtable hashPlayer = new Hashtable();
+
+    #region Componentes Jugador
+    public ThirdPersonController controladorPersonaje;
+    public EnEscenario enEscenario;
+    #endregion
 
     #region Carga
     public GameObject pantallaCarga;
@@ -58,7 +63,6 @@ public class PlayerUIScene : MonoBehaviourPunCallbacks
     #region Ver Reportes
     public List<Hashtable> listaReportes = new List<Hashtable>();
     public Hashtable verReporte = new Hashtable();
-    public int nlistaReportes;
     public GameObject btVerReportes;
     public GameObject pnlListaReportes;
         public GameObject prefabReporte;
@@ -76,6 +80,24 @@ public class PlayerUIScene : MonoBehaviourPunCallbacks
     PhotonView photonViewReportado;
     public bool estaReportadoMicro;
 
+    #endregion
+
+    #region Panel Deportivo
+    public GameObject Panelactividad;
+        public GameObject esperarjugador;
+        public GameObject expJugadorDeportivo;
+        public GameObject conversacionDeportivo;
+            public Text relojDeportivo;
+    #endregion
+
+    #region Puzzles
+    public GameObject notReportes;
+        public Text txtReportes;
+    public GameObject notPuzzles;
+    public GameObject listasPuzzles;
+        public GameObject prefabPuzzle;
+        public Transform ScrollViewcontentListPuzzle;
+    public List<Hashtable> listaPuzzles = new List<Hashtable>();
     #endregion
 
     private void Start()
@@ -98,6 +120,14 @@ public class PlayerUIScene : MonoBehaviourPunCallbacks
         pantallaCarga.SetActive(false);
         Expulsado.SetActive(false);
         sinDocente.SetActive(false);
+        notReportes.SetActive(false);
+        notPuzzles.SetActive(false);
+        listasPuzzles.SetActive(false);
+
+        Panelactividad.SetActive(false);
+        esperarjugador.SetActive(false);
+        expJugadorDeportivo.SetActive(false);
+        conversacionDeportivo.SetActive(false);
         if (PhotonNetwork.IsMasterClient)
         {
             botonCerrarSala.SetActive(true);
@@ -111,7 +141,7 @@ public class PlayerUIScene : MonoBehaviourPunCallbacks
 
         if (Microphone.devices.Length == 0)
         {
-            this.GetComponent<EnEscenario>().photonvoiceRecoder.enabled = false;
+            enEscenario.photonvoiceRecoder.enabled = false;
         }
         unitydevice = Microphone.devices;
         foreach (var item in Microphone.devices)
@@ -171,15 +201,27 @@ public class PlayerUIScene : MonoBehaviourPunCallbacks
                 pnlListaReportes.SetActive(false);
                 Reporte.SetActive(false);
                 vistaReporte.SetActive(false);
-                this.GetComponent<StarterAssets.ThirdPersonController>().enabled = true;
+                controladorPersonaje.enabled = true;
             }
             else
             {
                 Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.None;
                 menu.SetActive(true);
-                this.GetComponent<StarterAssets.ThirdPersonController>().enabled = false;
+                controladorPersonaje.enabled = false;
             }
+        }
+
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            if (listaPuzzles.Count!=0)
+            {
+                listasPuzzles.SetActive(true);
+            }
+        }
+        else if(listasPuzzles.active)
+        {
+            listasPuzzles.SetActive(false);
         }
 
         if (!estaReportadoMicro)
@@ -197,8 +239,8 @@ public class PlayerUIScene : MonoBehaviourPunCallbacks
                     }
                     Microfono.ClearOptions();
                     Microfono.AddOptions(unityMic);
-                    this.GetComponent<EnEscenario>().photonvoiceRecoder.enabled = true;
-                    this.GetComponent<EnEscenario>().photonvoiceRecoder.RestartRecording();
+                    enEscenario.photonvoiceRecoder.enabled = true;
+                    enEscenario.photonvoiceRecoder.RestartRecording();
                     sinMicrofonos = false;
                 }
                 else if (unityMic.Count != Microphone.devices.Length)
@@ -227,7 +269,7 @@ public class PlayerUIScene : MonoBehaviourPunCallbacks
                 Microfono.ClearOptions();
                 Microfono.AddOptions(unityMic);
                 sinMicrofono.SetActive(true);
-                this.GetComponent<EnEscenario>().photonvoiceRecoder.enabled = false;
+                enEscenario.photonvoiceRecoder.enabled = false;
                 Microfono.interactable = false;
                 sinMicrofonos = true;
             }
@@ -247,9 +289,29 @@ public class PlayerUIScene : MonoBehaviourPunCallbacks
 
         }
 
-        nlistaReportes = listaReportes.Count;
+        if (PhotonNetwork.IsMasterClient)
+        {
+            if (listaReportes.Count!=0)
+            {
+                notReportes.SetActive(true);
+                txtReportes.text = listaReportes.Count.ToString();
+            }
+            else
+            {
+                notReportes.SetActive(false);
+            }
+        }
 
-     }
+        if (listaPuzzles.Count != 0)
+        {
+            notPuzzles.SetActive(true);
+        }
+        else
+        {
+            notPuzzles.SetActive(false);
+        }
+
+    }
 
     #region ReportarUsuario
     public void listUsuarios()
@@ -299,7 +361,6 @@ public class PlayerUIScene : MonoBehaviourPunCallbacks
         }
         else
         {
-            prueba = PhotonNetwork.MasterClient.CustomProperties["photonViewID"].ToString();
             photonViewMasterClient = PhotonView.Find((int)PhotonNetwork.MasterClient.CustomProperties["photonViewID"]);
             photonViewMasterClient.RPC("enviarReporteMasterClient", RpcTarget.All,false, "Paula", ReporteUsuario);
         }
@@ -357,7 +418,7 @@ public class PlayerUIScene : MonoBehaviourPunCallbacks
     public void changeMicrofono()
     {
 
-        this.GetComponent<EnEscenario>().photonvoiceRecoder.MicrophoneDevice = new Photon.Voice.DeviceInfo(unityMic[Microfono.value]);
+        enEscenario.photonvoiceRecoder.MicrophoneDevice = new Photon.Voice.DeviceInfo(unityMic[Microfono.value]);
 
     }
 
@@ -410,7 +471,7 @@ public class PlayerUIScene : MonoBehaviourPunCallbacks
         pnlListaReportes.SetActive(false);
         vistaReporte.SetActive(false);
         Reporte.SetActive(false);
-        this.GetComponent<StarterAssets.ThirdPersonController>().enabled = true;
+        controladorPersonaje.enabled = true;
     }
     #endregion
 
@@ -428,7 +489,6 @@ public class PlayerUIScene : MonoBehaviourPunCallbacks
         if (PhotonNetwork.IsMasterClient)
         {
             Debug.Log("RCP RECIBIDO");
-            this.prueba = name;
             this.listaReportes.Add(reporte);
             Debug.Log(name);
         }      
@@ -441,7 +501,7 @@ public class PlayerUIScene : MonoBehaviourPunCallbacks
         {
             case 0:
                 Debug.Log("bloquear Micro");
-                this.GetComponent<EnEscenario>().photonvoiceRecoder.enabled = false;
+                enEscenario.photonvoiceRecoder.enabled = false;
                 estaReportadoMicro = true;
                 break;
             case 1:

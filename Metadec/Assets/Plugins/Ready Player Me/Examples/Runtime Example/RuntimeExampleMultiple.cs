@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,14 +7,13 @@ namespace ReadyPlayerMe
     public class RuntimeExampleMultiple : MonoBehaviour
     {
         [SerializeField]
-        public List<string> avatarUrls = new List<string>();
-        /*private string[] avatarUrls =
+        public List<string> avatarUrls = new List<string>
         {
             "https://api.readyplayer.me/v1/avatars/632d65e99b4c6a4352a9b8db.glb",
             "https://api.readyplayer.me/v1/avatars/632d678974be0f698c0cf4cc.glb",
             "https://api.readyplayer.me/v1/avatars/632d68079b4c6a4352a9bb29.glb",
             "https://api.readyplayer.me/v1/avatars/632d68559b4c6a4352a9bb75.glb"
-        };*/
+        };
         private const int RADIUS = 1;
         private List<GameObject> avatarList;
 
@@ -24,9 +22,7 @@ namespace ReadyPlayerMe
             ApplicationData.Log();
 
             avatarList = new List<GameObject>();
-            
 
-            
         }
 
         public void cargarAvatarsEscena()
@@ -34,6 +30,7 @@ namespace ReadyPlayerMe
             var urlSet = new HashSet<string>(avatarUrls);
             StartCoroutine(LoadAvatars(urlSet));
         }
+
         private IEnumerator LoadAvatars(HashSet<string> urlSet)
         {
             var loading = false;
@@ -45,6 +42,7 @@ namespace ReadyPlayerMe
                 loader.OnCompleted += (sender, args) =>
                 {
                     loading = false;
+                    AvatarAnimatorHelper.SetupAnimator(args.Metadata.BodyType, args.Avatar);
                     OnAvatarLoaded(args.Avatar);
                 };
                 loader.LoadAvatar(url);
@@ -57,7 +55,8 @@ namespace ReadyPlayerMe
         {
             if (avatarList != null)
             {
-                avatarList.Add(avatar);                
+                avatarList.Add(avatar);
+                avatar.transform.position = Quaternion.Euler(90, 0, 0) * Random.insideUnitCircle * RADIUS;
             }
             else
             {

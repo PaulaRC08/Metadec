@@ -45,6 +45,14 @@ MonoBehaviour:
   - RespawnSpaceship
   - enviarReporteMasterClient
   - penalizarReporteaJugador
+  - cambiarEstadoJuegoDeportes
+  - DeportesP1
+  - DeportesP2
+  - cambiarListoJugadorDeportes
+  - cambiarListoJugadorDeportes2
+  - cambiarEstadoJuegoBienestar
+  - cambiarListoJugadorBienestar
+  - cambiarListoJugadorBienestar2
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 0

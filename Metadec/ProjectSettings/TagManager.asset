@@ -8,6 +8,15 @@ TagManager:
   - Undefined
   - FollowCamera
   - Fluid
+  - basket
+  - bolos
+  - voleibol
+  - futbol
+  - bici
+  - americano
+  - boxeo
+  - tenis
+  - beisbol
   layers:
   - Default
   - TransparentFX

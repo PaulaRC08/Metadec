@@ -82,7 +82,6 @@ namespace ReadyPlayerMe
         // Animation avatars
         private const string MASCULINE_ANIMATION_AVATAR_NAME = "AnimationAvatars/MasculineAnimationAvatar";
         private const string FEMININE_ANIMATION_AVATAR_NAME = "AnimationAvatars/FeminineAnimationAvatar";
-
         private const string ANIMATOR_CONTROLLER_NAME = "Avatar Animator";
 
         // Bone names
@@ -110,9 +109,10 @@ namespace ReadyPlayerMe
                 ? MASCULINE_ANIMATION_AVATAR_NAME
                 : FEMININE_ANIMATION_AVATAR_NAME;
             var animationAvatar = Resources.Load<Avatar>(animationAvatarSource);
+
             var animatorController = Resources.Load<RuntimeAnimatorController>(ANIMATOR_CONTROLLER_NAME);
 
-            var usingTPC = GameObject.Find("https://api.readyplayer.me/v1/avatars/" + $"{avatar.name}" + ".glb").transform.parent; //Find Player with assigned avatarUrl only to parenting avatar, if you have more than 1 Player in the scene.
+            var usingTPC = GameObject.Find("https://models.readyplayer.me/" + $"{avatar.name}" + ".glb").transform.parent; //Find Player with assigned avatarUrl only to parenting avatar, if you have more than 1 Player in the scene.
             // var usingTPC = GameObject.FindGameObjectWithTag("Player"); //Find Player with Tag to parent avatar
             if (usingTPC)  //Set Custom Process if using TPC
             {
@@ -129,7 +129,6 @@ namespace ReadyPlayerMe
                 animator.avatar = animationAvatar;
                 animator.applyRootMotion = true;
             }
-            //End
         }
 
         #endregion

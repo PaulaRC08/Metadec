@@ -296,6 +296,13 @@ namespace StarterAssets
             _animIDLanzar = Animator.StringToHash("Lanzar");
         }
 
+        public void groundedAutomatic() {
+            _animator.SetFloat(_animIDSpeed, 0f);
+            _animator.SetBool(_animIDGrounded, true);
+            _animator.SetBool(_animIDJump, false);
+            _animator.SetBool(_animIDFreeFall, false);
+        }
+
         private void GroundedCheck()
         {
             // set sphere position, with offset
