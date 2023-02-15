@@ -17,6 +17,7 @@ TagManager:
   - boxeo
   - tenis
   - beisbol
+  - piezapuzzle
   layers:
   - Default
   - TransparentFX

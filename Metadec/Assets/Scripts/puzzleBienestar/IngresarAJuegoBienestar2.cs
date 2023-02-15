@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class IngresarAJuegoBienestar2 : MonoBehaviourPun
 {
-    /////public GameObject controlerDeportes;
+    public GameObject controlerBienestar;
     public Collider Trigger;
     public GameObject cameraPlayer;
     public GameObject canvasJuego;
@@ -36,25 +36,31 @@ public class IngresarAJuegoBienestar2 : MonoBehaviourPun
             camPlayer2.SetActive(true);
             jugador.transform.rotation = Quaternion.identity;
             jugador.transform.position = posicionPlayer2.position;
-            jugador.GetComponent<ThirdPersonController>().enabled = true;
+            jugador.GetComponent<ThirdPersonController>().enabled = false;
             jugador.GetComponent<CharacterController>().enabled = true;
             jugador.GetComponent<CapsuleCollider>().enabled = true;
-            jugador.GetComponent<ThirdPersonController>().MoveSpeed = 10;
+            jugador.GetComponent<ThirdPersonController>().MoveSpeed = 2;
+            jugador.GetComponent<ThirdPersonController>().SprintSpeed = 5.335f;
             jugador.GetComponent<ThirdPersonController>().JumpHeight = 1.2f;
-            jugador.GetComponent<EnEscenario>().proximityVoice.GetComponent<SphereCollider>().radius = 50;
+            jugador.GetComponent<EnEscenario>().proximityVoice.GetComponent<SphereCollider>().radius = 70;
             cameraPlayer.transform.rotation = new Quaternion(0, 0, 0, 0);
             cameraPlayer.SetActive(false);
-            jugador.GetComponent<PlayerUIScene>().Panelactividad.SetActive(true);
-            jugador.GetComponent<PlayerUIScene>().esperarjugador.SetActive(false);
-            jugador.GetComponent<PlayerUIScene>().expJugadorDeportivo.SetActive(true);
+            jugador.GetComponent<PlayerUIScene>().PanelactividadBienestar.SetActive(true);
+            jugador.GetComponent<PlayerUIScene>().esperarjugadorBienestar.SetActive(false);
+            jugador.GetComponent<PlayerUIScene>().expJugadorBienestar.SetActive(true);
+            jugador.GetComponent<PlayerUIScene>().conversacionBienestar.SetActive(true);
+            jugador.GetComponent<ThirdPersonController>().MecanicasBloqueadas = false;
+            jugador.GetComponent<PlayerUIScene>().isPlayer2 = true;
             Invoke("desactivarExplicacion", 3f);
         }
     }
 
     public void desactivarExplicacion()
     {
-        jugador.GetComponent<PlayerUIScene>().Panelactividad.SetActive(true);
-        jugador.GetComponent<PlayerUIScene>().expJugadorDeportivo.SetActive(false);
+        jugador.GetComponent<PlayerUIScene>().expJugadorBienestar.SetActive(false);
+        jugador.GetComponent<PlayerUIScene>().conversacionBienestar.SetActive(true);
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -66,14 +72,20 @@ public class IngresarAJuegoBienestar2 : MonoBehaviourPun
             {
                 photonjugador = other.gameObject.GetComponent<EnEscenario>().photonView;
                 jugador = other.gameObject;
+                controlerBienestar.GetComponent<controlerAjedrez>().jugador2 = other.gameObject;
                 juegoBienestar.setJugador2listo(true, photonjugador.IsMine);
+                other.GetComponent<ThirdPersonController>().Grounded = true;
+                other.GetComponent<ThirdPersonController>().groundedAutomatic();
                 other.GetComponent<ThirdPersonController>().MoveSpeed = 0;
+                other.GetComponent<ThirdPersonController>().SprintSpeed = 0;
                 other.GetComponent<ThirdPersonController>().JumpHeight = 0;
-                //////controlerDeportes.GetComponent<controlerDeportes>().player2 = other.gameObject.GetComponent<PhotonView>().Controller;
+                other.GetComponent<ThirdPersonController>().MecanicasBloqueadas = true;
+                //other.GetComponent<ThirdPersonController>().enabled = false;
+                controlerBienestar.GetComponent<controlerAjedrez>().player2 = other.gameObject.GetComponent<PhotonView>().Controller;
                 if (photonjugador.IsMine)
                 {
-                    other.GetComponent<PlayerUIScene>().Panelactividad.SetActive(true);
-                    other.GetComponent<PlayerUIScene>().esperarjugador.SetActive(true);
+                    other.GetComponent<PlayerUIScene>().PanelactividadBienestar.SetActive(true);
+                    other.GetComponent<PlayerUIScene>().esperarjugadorBienestar.SetActive(true);
                     ingreso = true;
                 }
             }
@@ -88,11 +100,15 @@ public class IngresarAJuegoBienestar2 : MonoBehaviourPun
             if (Input.GetKeyDown(KeyCode.Q))
             {
                 juegoBienestar.setJugador2listo(false, true);
-                jugador.GetComponent<ThirdPersonController>().MoveSpeed = 10;
+                
+                jugador.GetComponent<ThirdPersonController>().MoveSpeed = 2;
+                jugador.GetComponent<ThirdPersonController>().SprintSpeed = 5.335f;
                 jugador.GetComponent<ThirdPersonController>().JumpHeight = 1.2f;
-                //////controlerDeportes.GetComponent<controlerDeportes>().player2 = null;
-                jugador.GetComponent<PlayerUIScene>().Panelactividad.SetActive(false);
-                jugador.GetComponent<PlayerUIScene>().esperarjugador.SetActive(false);
+                controlerBienestar.GetComponent<controlerAjedrez>().player2 = null;
+                jugador.GetComponent<PlayerUIScene>().PanelactividadBienestar.SetActive(false);
+                jugador.GetComponent<PlayerUIScene>().esperarjugadorBienestar.SetActive(false);
+                jugador.GetComponent<ThirdPersonController>().MecanicasBloqueadas = false;
+                //jugador.GetComponent<ThirdPersonController>().enabled = true;
                 ingreso = false;
             }
         }

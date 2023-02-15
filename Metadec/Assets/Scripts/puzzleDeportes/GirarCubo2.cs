@@ -128,7 +128,7 @@ public class GirarCubo2 : MonoBehaviourPun
         jugador.GetComponent<ThirdPersonController>().enabled = true;
         jugador.GetComponent<CharacterController>().enabled = true;
         jugador.GetComponent<CapsuleCollider>().enabled = true;
-        jugador.GetComponent<ThirdPersonController>().MoveSpeed = 10;
+        jugador.GetComponent<ThirdPersonController>().MoveSpeed = 2;
         jugador.GetComponent<ThirdPersonController>().JumpHeight = 1.2f;
         jugador.GetComponent<PlayerUIScene>().Panelactividad.SetActive(false);
         jugador.GetComponent<PlayerUIScene>().conversacionDeportivo.SetActive(false);

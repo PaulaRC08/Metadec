@@ -40,7 +40,8 @@ public class IngresarAJuego : MonoBehaviourPun
             jugador.GetComponent<ThirdPersonController>().enabled = true;
             jugador.GetComponent<CharacterController>().enabled = true;
             jugador.GetComponent<CapsuleCollider>().enabled = true;
-            jugador.GetComponent<ThirdPersonController>().MoveSpeed = 10;
+            jugador.GetComponent<ThirdPersonController>().MoveSpeed = 2;
+            jugador.GetComponent<ThirdPersonController>().SprintSpeed = 5.335f;
             jugador.GetComponent<ThirdPersonController>().JumpHeight = 1.2f;
             jugador.GetComponent<EnEscenario>().proximityVoice.GetComponent<SphereCollider>().radius = 50;
             cameraPlayer.transform.rotation = new Quaternion(0,0,0,0);
@@ -48,7 +49,9 @@ public class IngresarAJuego : MonoBehaviourPun
             jugador.GetComponent<PlayerUIScene>().Panelactividad.SetActive(true);
             jugador.GetComponent<PlayerUIScene>().esperarjugador.SetActive(false);
             jugador.GetComponent<PlayerUIScene>().expJugadorDeportivo.SetActive(true);
+            jugador.GetComponent<ThirdPersonController>().MecanicasBloqueadas = false;
             Invoke("desactivarExplicacion", 3f);
+            //desactivarExplicacion();
         }
     }
 
@@ -68,8 +71,13 @@ public class IngresarAJuego : MonoBehaviourPun
                 photonjugador = other.gameObject.GetComponent<EnEscenario>().photonView;
                 jugador = other.gameObject;
                 juegoDeportes.setJugador1listo(true, photonjugador.IsMine);
+                other.GetComponent<ThirdPersonController>().Grounded = true;
+                other.GetComponent<ThirdPersonController>().groundedAutomatic();
                 other.GetComponent<ThirdPersonController>().MoveSpeed = 0;
+                other.GetComponent<ThirdPersonController>().SprintSpeed = 0;
                 other.GetComponent<ThirdPersonController>().JumpHeight = 0;
+                other.GetComponent<ThirdPersonController>().MecanicasBloqueadas = true;
+                //other.GetComponent<ThirdPersonController>().enabled = false;
                 controlerDeportes.GetComponent<controlerDeportes>().player1 = other.gameObject.GetComponent<PhotonView>().Controller;
                 if (photonjugador.IsMine)
                 {
@@ -90,12 +98,18 @@ public class IngresarAJuego : MonoBehaviourPun
             if (Input.GetKeyDown(KeyCode.Q))
             {
                 juegoDeportes.setJugador1listo(false, true);
-                jugador.GetComponent<ThirdPersonController>().MoveSpeed = 10;
+                
+                jugador.GetComponent<ThirdPersonController>().MoveSpeed = 2;
+                jugador.GetComponent<ThirdPersonController>().SprintSpeed = 5.335f;
                 jugador.GetComponent<ThirdPersonController>().JumpHeight = 1.2f;
+                jugador.GetComponent<ThirdPersonController>().MecanicasBloqueadas = false;
                 controlerDeportes.GetComponent<controlerDeportes>().player1 = null;
                 jugador.GetComponent<PlayerUIScene>().Panelactividad.SetActive(false);
                 jugador.GetComponent<PlayerUIScene>().esperarjugador.SetActive(false);
+                //jugador.GetComponent<ThirdPersonController>().enabled = true;
+                jugador.GetComponent<ThirdPersonController>().MecanicasBloqueadas = false;
                 ingreso = false;
+
             }
         }
     }

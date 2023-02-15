@@ -117,6 +117,8 @@ namespace StarterAssets
 
         private bool _hasAnimator;
 
+        public bool MecanicasBloqueadas;
+
         private bool IsCurrentDeviceMouse
         {
             get
@@ -229,9 +231,12 @@ namespace StarterAssets
                                 }
                                 else
                                 {
-                                    JumpAndGravity();
-                                    GroundedCheck();
-                                    Move();
+                                    if (!MecanicasBloqueadas)
+                                    {
+                                        JumpAndGravity();
+                                    }
+                                        GroundedCheck();
+                                        Move();
                                 }
                             }
                         }

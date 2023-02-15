@@ -90,6 +90,15 @@ public class PlayerUIScene : MonoBehaviourPunCallbacks
             public Text relojDeportivo;
     #endregion
 
+    #region Panel Bienestar
+    public bool isPlayer2;
+
+    public GameObject PanelactividadBienestar;
+        public GameObject esperarjugadorBienestar;
+        public GameObject expJugadorBienestar;
+        public GameObject conversacionBienestar;
+    #endregion
+
     #region Puzzles
     public GameObject notReportes;
         public Text txtReportes;
@@ -128,6 +137,12 @@ public class PlayerUIScene : MonoBehaviourPunCallbacks
         esperarjugador.SetActive(false);
         expJugadorDeportivo.SetActive(false);
         conversacionDeportivo.SetActive(false);
+
+        PanelactividadBienestar.SetActive(false);
+        esperarjugadorBienestar.SetActive(false);
+        expJugadorBienestar.SetActive(false);
+        conversacionBienestar.SetActive(false);
+
         if (PhotonNetwork.IsMasterClient)
         {
             botonCerrarSala.SetActive(true);
@@ -194,7 +209,17 @@ public class PlayerUIScene : MonoBehaviourPunCallbacks
         {
             if (menu.active || ReporteListaUsuarios.active || Reporte.active || pnlListaReportes.active || vistaReporte.active)
             {
-                Cursor.visible = false;
+                if (!isPlayer2)
+                {
+                    Cursor.visible = false;
+                    Cursor.lockState = CursorLockMode.Locked;
+                }
+                else
+                {
+                    Cursor.visible = true;
+                    Cursor.lockState = CursorLockMode.None;
+                }
+
                 sinMicrofono.SetActive(false);
                 menu.SetActive(false);
                 ReporteListaUsuarios.SetActive(false);
@@ -464,8 +489,17 @@ public class PlayerUIScene : MonoBehaviourPunCallbacks
 
     public void salirmenu()
     {
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
+        if (!isPlayer2)
+        {
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+        else
+        {
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+        }
+        
         menu.SetActive(false);
         ReporteListaUsuarios.SetActive(false);
         pnlListaReportes.SetActive(false);

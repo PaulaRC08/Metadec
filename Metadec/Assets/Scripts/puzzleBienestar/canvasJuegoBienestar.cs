@@ -65,7 +65,7 @@ public class canvasJuegoBienestar : MonoBehaviourPun
                 if (jugador2listo)
                 {
                     juegoIniciado = true;
-                    Invoke("iniciarJuego", 1.5f);
+                    iniciarJuego();
                 }
 
             }
@@ -111,7 +111,7 @@ public class canvasJuegoBienestar : MonoBehaviourPun
                 if (jugador1listo)
                 {
                     juegoIniciado = true;
-                    Invoke("iniciarJuego", 1.5f);
+                    iniciarJuego();
                 }
             }
         }

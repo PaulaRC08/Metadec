@@ -37,6 +37,8 @@ public class LobbyControl : MonoBehaviourPunCallbacks
         public Text txErrorEmergente;
     Hashtable hashRoomLobby = new Hashtable();
 
+    public GameObject AvataPlayer;
+
     bool isload = false;
 
     //Datos prueba traidos de servidor externo
@@ -215,7 +217,7 @@ public class LobbyControl : MonoBehaviourPunCallbacks
         }
         eliminarListaJugadores();
         listaJugadores();
-        Instantiate(prefabPlayer, new Vector3(7.17000008f, 0, 26.2299995f), Quaternion.Euler(0, 194.386f, 0));
+        AvataPlayer = Instantiate(prefabPlayer, new Vector3(7.17000008f, 0, 26.2299995f), Quaternion.Euler(0, 194.386f, 0));
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
@@ -407,6 +409,10 @@ public class LobbyControl : MonoBehaviourPunCallbacks
         iniciodeSesion.SetActive(true);
         ingresoSalaDocente.SetActive(false);
         ingresoSalaEstudiante.SetActive(false);
+        if (AvataPlayer != null)
+        {
+            Destroy(AvataPlayer);
+        }
     }
     public void cerrarErrorEmergente()
     {
