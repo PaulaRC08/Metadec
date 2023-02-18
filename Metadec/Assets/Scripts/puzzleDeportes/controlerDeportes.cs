@@ -5,6 +5,11 @@ using UnityEngine;
 
 public class controlerDeportes : MonoBehaviour
 {
+    public AudioSource audio;
+        public AudioClip clipCorrecto;
+        public AudioClip clipIncorrecto;
+        public AudioClip clipGanador;
+
     public Player player1;
     public Player player2;
 
@@ -64,12 +69,16 @@ public class controlerDeportes : MonoBehaviour
                         elementoElegidoP2.particulas.GetComponent<ParticleSystem>().Play();
                     }
                     StartCoroutine(activarCubos(true, 3f));
+                    audio.clip = clipCorrecto;
+                    audio.Play();
                     contadorAciertos++;
 
                 }
                 else
                 {
                     StartCoroutine(activarCubos(false, 4f));
+                    audio.clip = clipIncorrecto;
+                    audio.Play();
 
                 }
                 player1Eligio = false;
@@ -126,6 +135,8 @@ public class controlerDeportes : MonoBehaviour
             elementoElegidoP2 = null;
 
             juegoDeportes.juegoLiberado();
+            audio.clip = clipGanador;
+            audio.Play();
         }
         else
         {

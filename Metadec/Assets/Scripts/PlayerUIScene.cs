@@ -27,8 +27,10 @@ public class PlayerUIScene : MonoBehaviourPunCallbacks
 
     #region Pantalla Principal
     public GameObject pantallaPrincipal;
+    public GameObject abrirHipervinculo;
     public GameObject sinMicrofono;
         public Text sinMicrofonoDescripcion;
+    public Text relojGeneral;
     #endregion
 
     #region Opciones Menu
@@ -99,6 +101,14 @@ public class PlayerUIScene : MonoBehaviourPunCallbacks
         public GameObject conversacionBienestar;
     #endregion
 
+    #region Panel Restaurante
+
+    public GameObject PanelactividadRestaurante;
+    public GameObject esperarjugadorRestaurante;
+    public GameObject expJugadorRestaurante;
+    public GameObject conversacionRestaurante;
+    #endregion
+
     #region Puzzles
     public GameObject notReportes;
         public Text txtReportes;
@@ -121,6 +131,7 @@ public class PlayerUIScene : MonoBehaviourPunCallbacks
         Cursor.visible = false;
         pantallaPrincipal.SetActive(true);
         sinMicrofono.SetActive(false);
+        abrirHipervinculo.SetActive(false);
         menu.SetActive(false);
         ReporteListaUsuarios.SetActive(false);
         Reporte.SetActive(false);
@@ -142,6 +153,12 @@ public class PlayerUIScene : MonoBehaviourPunCallbacks
         esperarjugadorBienestar.SetActive(false);
         expJugadorBienestar.SetActive(false);
         conversacionBienestar.SetActive(false);
+
+
+        PanelactividadRestaurante.SetActive(false);
+        esperarjugadorRestaurante.SetActive(false);
+        expJugadorRestaurante.SetActive(false);
+        conversacionRestaurante.SetActive(false);
 
         if (PhotonNetwork.IsMasterClient)
         {
@@ -484,7 +501,7 @@ public class PlayerUIScene : MonoBehaviourPunCallbacks
 
     public void cerrarSala()
     {
-        //PhotonNetwork.LeaveRoom();
+        PhotonNetwork.LeaveRoom();
     }
 
     public void salirmenu()

@@ -51,6 +51,7 @@ public class IngresarAJuegoBienestar2 : MonoBehaviourPun
             jugador.GetComponent<PlayerUIScene>().conversacionBienestar.SetActive(true);
             jugador.GetComponent<ThirdPersonController>().MecanicasBloqueadas = false;
             jugador.GetComponent<PlayerUIScene>().isPlayer2 = true;
+            //controlerBienestar.GetComponent<AudioSource>().enabled = true;
             Invoke("desactivarExplicacion", 3f);
         }
     }
@@ -68,7 +69,7 @@ public class IngresarAJuegoBienestar2 : MonoBehaviourPun
         Debug.Log("Ingreso al Trigger");
         if (other.tag == "Player")
         {
-            if (!juegoBienestar.juegoIniciado)
+            if (!juegoBienestar.juegoIniciado && !juegoBienestar.jugador2listo)
             {
                 photonjugador = other.gameObject.GetComponent<EnEscenario>().photonView;
                 jugador = other.gameObject;

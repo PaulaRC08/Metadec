@@ -42,7 +42,7 @@ namespace ReadyPlayerMe
                 loader.OnCompleted += (sender, args) =>
                 {
                     loading = false;
-                    AvatarAnimatorHelper.SetupAnimator(args.Metadata.BodyType, args.Avatar);
+                    //AvatarAnimatorHelper.SetupAnimator(args.Metadata.BodyType, args.Avatar);
                     OnAvatarLoaded(args.Avatar);
                 };
                 loader.LoadAvatar(url);
@@ -56,7 +56,7 @@ namespace ReadyPlayerMe
             if (avatarList != null)
             {
                 avatarList.Add(avatar);
-                avatar.transform.position = Quaternion.Euler(90, 0, 0) * Random.insideUnitCircle * RADIUS;
+                //avatar.transform.position = Quaternion.Euler(90, 0, 0) * Random.insideUnitCircle * RADIUS;
             }
             else
             {

@@ -66,7 +66,7 @@ public class IngresarAJuego : MonoBehaviourPun
         Debug.Log("Ingreso al Trigger");
         if (other.tag == "Player")
         {
-            if (!juegoDeportes.juegoIniciado)
+            if (!juegoDeportes.juegoIniciado && !juegoDeportes.jugador1listo)
             {
                 photonjugador = other.gameObject.GetComponent<EnEscenario>().photonView;
                 jugador = other.gameObject;
@@ -77,7 +77,7 @@ public class IngresarAJuego : MonoBehaviourPun
                 other.GetComponent<ThirdPersonController>().SprintSpeed = 0;
                 other.GetComponent<ThirdPersonController>().JumpHeight = 0;
                 other.GetComponent<ThirdPersonController>().MecanicasBloqueadas = true;
-                //other.GetComponent<ThirdPersonController>().enabled = false;
+                other.GetComponent<ThirdPersonController>().enabled = false;
                 controlerDeportes.GetComponent<controlerDeportes>().player1 = other.gameObject.GetComponent<PhotonView>().Controller;
                 if (photonjugador.IsMine)
                 {
@@ -106,7 +106,7 @@ public class IngresarAJuego : MonoBehaviourPun
                 controlerDeportes.GetComponent<controlerDeportes>().player1 = null;
                 jugador.GetComponent<PlayerUIScene>().Panelactividad.SetActive(false);
                 jugador.GetComponent<PlayerUIScene>().esperarjugador.SetActive(false);
-                //jugador.GetComponent<ThirdPersonController>().enabled = true;
+                jugador.GetComponent<ThirdPersonController>().enabled = true;
                 jugador.GetComponent<ThirdPersonController>().MecanicasBloqueadas = false;
                 ingreso = false;
 

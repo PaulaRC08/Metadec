@@ -22,3 +22,8 @@ juegos.bien.Meta,FINISH,META
 juegos.bien.preguntaHablar,Where were your last vacations? What places have you visited? Do you have friends in another country?,"Donde fueron tus ultimas vacaciones, Que lugares has visitado?, tienes amigos en otro pais? "
 juegos.bien.descTitulo,FIND THE COUNTRY,ENCUENTRA EL PAIS
 juegos.bien.descDescripcion,Talk to your partner to solve the questions and enable the path of the second player,Habla con tu compañero para resolver las preguntas y habilitar el camino del segundo jugador
+juegos.rest.preguntaHablar,Ask your partner which buttons to press according to the sequence seen,Pregunta a tu compañero que botones oprimir segun la secuencia vista
+juegos.rest.descTitulo,THE COFFEE MAKER SAYS,LA CAFETERA DICE
+juegos.rest.descDescripcion,"Talk to your partner to decipher the code, repeating the action shown according to the instructions in the manual","Habla con tu compañero para descifrar el código, repitiendo la acción mostrada según las indicaciones del manual "
+juegos.rest.fallo,STRIKE,FALLO
+juegos.rest.reinicioJuego,GAME RESET,REINICIO DE JUEGO

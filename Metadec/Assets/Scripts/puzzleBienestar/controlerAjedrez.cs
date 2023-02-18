@@ -8,6 +8,11 @@ using UnityEngine.UI;
 
 public class controlerAjedrez : MonoBehaviourPun
 {
+    public AudioSource audio;
+        public AudioClip clipCorrecto;
+        public AudioClip clipIncorrecto;
+        public AudioClip clipGanador;
+
     public Player player1;
     public Player player2;
     public GameObject jugador1;
@@ -85,7 +90,7 @@ public class controlerAjedrez : MonoBehaviourPun
     public void SeleccionarPieza()
     {
         //Ray rayo = camer.ScreenPointToRay(Input.mousePosition);
-        //Debug.DrawRay(Input.mousePosition, camer.transform.up*50, Color.red, 5f);
+        Debug.DrawRay(Input.mousePosition, camer.transform.up*50, Color.red, 5f);
 
         //Ray rayo = new Ray(transform.position, Vector3.down);       
         RaycastHit hit;
@@ -160,6 +165,8 @@ public class controlerAjedrez : MonoBehaviourPun
                     if (this.pais == pieza.name)
                     {
                         pieza.transform.position = new Vector3(Solucion[i].transform.position.x, positionypieza, Solucion[i].transform.position.z);
+                        audio.clip = clipCorrecto;
+                        audio.Play();
                         this.photonView.RPC("tirarFichas", player1, false, pieza.name);
                         tirarFichasMe(pieza.name);
                         contadorSolucionesCorrectas++;
@@ -173,6 +180,8 @@ public class controlerAjedrez : MonoBehaviourPun
                             }
                             Debug.Log("Ganaste");
                             Debug.Log(contadorSolucionesCorrectas);
+                            audio.clip = clipGanador;
+                            audio.Play();
                             Invoke("GanarSacarJugadoresActividad", 3f);
 
                         }
@@ -180,13 +189,16 @@ public class controlerAjedrez : MonoBehaviourPun
                     }
                     else {
                         pieza.transform.position = piezaposisioninicial;
+                        audio.clip = clipIncorrecto;
+                        audio.Play();
                     }
                     break;
                 }
                 else
                 {
                     pieza.transform.position = piezaposisioninicial;
-
+                    audio.clip = clipIncorrecto;
+                    audio.Play();
                 }
             }
         }
@@ -214,33 +226,41 @@ public class controlerAjedrez : MonoBehaviourPun
         {
             chile[i].transform.rotation = chilePosition[i].rotation;
             chile[i].transform.position = chilePosition[i].position;
+            chileTrigger.GetComponent<BoxCollider>().enabled = true;
         }
         for (int i = 0; i < india.Count; i++)
         {
             india[i].transform.rotation = indiaPosition[i].rotation;
             india[i].transform.position = indiaPosition[i].position;
+            indiaTrigger.GetComponent<BoxCollider>().enabled = true;
         }
         for (int i = 0; i < españa.Count; i++)
         {
             españa[i].transform.rotation = españaPosition[i].rotation;
             españa[i].transform.position = españaPosition[i].position;
+            españaTrigger.GetComponent<BoxCollider>().enabled = true;
         }
         for (int i = 0; i < peru.Count; i++)
         {
             peru[i].transform.rotation = peruPosition[i].rotation;
             peru[i].transform.position = peruPosition[i].position;
+            peruTrigger.GetComponent<BoxCollider>().enabled = true;
         }
     }
 
     public void GanarSacarJugadoresActividad()
     {
-        this.photonView.RPC("sacarJugadores", player1, false, "123");
+        chileTrigger.GetComponent<BoxCollider>().enabled = true;
+        indiaTrigger.GetComponent<BoxCollider>().enabled = true;
+        españaTrigger.GetComponent<BoxCollider>().enabled = true;
+        peruTrigger.GetComponent<BoxCollider>().enabled = true;
         jugador2.GetComponent<ThirdPersonController>().Grounded = true;
         jugador2.GetComponent<ThirdPersonController>().groundedAutomatic();
         jugador2.GetComponent<CapsuleCollider>().enabled = false;
         jugador2.GetComponent<ThirdPersonController>().enabled = false;
         jugador2.GetComponent<ThirdPersonController>().MoveSpeed = 0;
         jugador2.GetComponent<ThirdPersonController>().JumpHeight = 0;
+        jugador2.transform.position = posicionPlayer2Ganar.position;
         jugador2.transform.position = posicionPlayer2Ganar.position;
         //jugador.GetComponent<ThirdPersonController>().Grounded = true;
         //jugador.GetComponent<ThirdPersonController>().groundedAutomatic();
@@ -253,6 +273,7 @@ public class controlerAjedrez : MonoBehaviourPun
         jugador2.GetComponent<PlayerUIScene>().conversacionBienestar.SetActive(false);
         juegoBienestar.juegoLiberado();
         jugador2.GetComponent<EnEscenario>().proximityVoice.GetComponent<SphereCollider>().radius = 0.74f;
+        this.photonView.RPC("sacarJugadores", player1, false, "123");
         camer.gameObject.SetActive(false);
         MainCamera.SetActive(true);
     }
@@ -320,6 +341,8 @@ public class controlerAjedrez : MonoBehaviourPun
                 peruTrigger.GetComponent<Collider>().enabled = false;
                 break;
         }
+        audio.clip = clipCorrecto;
+        audio.Play();
     }
 
     public void tirarFichasMe(string opc)

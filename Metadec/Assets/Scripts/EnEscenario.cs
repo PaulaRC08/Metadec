@@ -61,7 +61,7 @@ public class EnEscenario : MonoBehaviourPunCallbacks
         // Update is called once per frame
     void Update()
     {
-        carga.SetActive(false);
+        //carga.SetActive(false);
         if (control != null && iscargado)
         {
             control.GetComponent<InstanciarJugadpr>().nJugadoresEnEscena += 1;
